@@ -70,6 +70,14 @@ Intel 出品的跨平台推理引擎：模型经 `optimum-cli` 导出成 IR 格�
 | 厂商 | NVIDIA | AMD | Intel |
 | 生态成熟度 | 最成熟，所有主流框架一等公民 | 追赶中，Linux 支持好，**Windows 支持有限**（HIP SDK 渐进补齐） | Intel 全家桶内成熟 |
 | 适用硬件 | NVIDIA 显卡（游戏卡即可） | AMD Radeon **RDNA3（RX 7000 系）与 RDNA4（RX 9000 系）** 已官方支持，更老的 RDNA1/2 部分可用；A 卡核显基本不在列 | Intel CPU / iGPU / Arc / NPU |
+
+**ROCm（HIP SDK）Windows 官方支持名单**（依据 rocm.docs.amd.com，2026 年）：
+
+- **RDNA4（完整支持：Runtime + HIP SDK + Debugger）**：RX 9070 XT / 9070 / 9070 GRE / 9060 XT / 9060（gfx1200/1201），工作站卡 AI PRO R9700
+- **RDNA3（Runtime + HIP SDK 支持，Windows 上 Debugger 不可用）**：RX 7900 XTX / 7900 XT / 7900 GRE、RX 7800 XT / 7700 XT、RX 7650 GRE / 7600 XT / 7600（gfx1100~1102），工作站卡 PRO W7900 / W7800 / W7700
+- **RDNA3.5 APU（完整支持）**：Ryzen AI Max 385 / 390 / 395（含 Pro 版，gfx1151）、Ryzen AI 300 系列（gfx1150）——Strix Halo 一族的核显是官方点名支持的
+- **RDNA2（RX 6000 系）**：在新版矩阵中已降级/标注不受支持，社区靠 `HSA_OVERRIDE_GFX_VERSION` 强绕（官方声明不支持 Windows 上这么做）
+- **A 卡核显（780M/890M 等）**：不在官方名单，部分工具链可经 override 勉强工作
 | 典型用途 | 训练 + 推理全能，深度学习首选 | Linux 下 AMD 卡跑训练/推理 | 边缘/端侧推理、核显白嫖算力 |
 | Windows 体验 | 开箱即用 | 常需 WSL2 或等待 Windows 后端完善 | 开箱即用 |
 
