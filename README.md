@@ -44,6 +44,42 @@ QQ 客户端(hook 注入) → SnowLuma(OneBot v11) → 反向 WS → AstrBot →
 3. AstrBot → 服务提供商：配置 OpenAI 兼容接口（本项目用火山方舟 `deepseek-v4.1-flash`）
 4. 把本仓库 `plugins/` 下的插件复制到 `astrbot/data/plugins/`，重启 AstrBot 生效
 
+## 支持的环境与硬件加速
+
+### 运行环境
+
+| 项 | 要求 |
+| --- | --- |
+| OS | Windows x64（本项目实测）/ Linux x64、arm64（SnowLuma 原生支持，AstrBot 官方支持） |
+| Python | 3.12（AstrBot 主环境 + 各 worker 子进程） |
+| Node.js | SnowLuma 完整版自带，Lite 版需 24+ |
+| 本地推理依赖 | llama.cpp（gguf）/ OpenVINO ≥ 2026.4（IR 推理）/ faster-whisper（ctranslate2） |
+
+### OpenVINO（Intel 路线，本项目实测在用）
+
+Intel 出品的跨平台推理引擎：模型经 `optimum-cli` 导出成 IR 格式后，同一份模型可跑在 **Intel CPU / 核显（iGPU）/ 独显 / NPU** 上，无需改代码。
+
+- **适用范围**：Intel 核显笔记本（如 Iris Xe / Arc 核显）的性价比方案——不花一分钱把闲置的 iGPU 用起来；也覆盖 Arc 独显和带 NPU 的 Core Ultra
+- **本项目实测**：Qwen2-VL-2B 走 `openvino-genai` 的 VLMPipeline 在 Iris Xe 上跑视觉，比 llama.cpp 纯 CPU **快约 1 倍**（960px 图 ~10s），且能吃下 llama.cpp 必崩的大图
+- **局限**：openvino-genai 的管线对模型导出格式敏感（本项目 Whisper 的 IR 就因 optimum-intel 版本组合导出为无状态格式而跑不了，退回 faster-whisper CPU）；AMD/NVIDIA 显卡不在加速范围内
+
+### 替代品对比：ROCm 与 CUDA
+
+| | **CUDA** | **ROCm** | **OpenVINO** |
+| --- | --- | --- | --- |
+| 厂商 | NVIDIA | AMD | Intel |
+| 生态成熟度 | 最成熟，所有主流框架一等公民 | 追赶中，Linux 支持好，**Windows 支持有限**（HIP SDK 渐进补齐） | Intel 全家桶内成熟 |
+| 适用硬件 | NVIDIA 显卡（游戏卡即可） | AMD Radeon（官方仅支持部分型号，如 RX 7900/9000 系；A 卡核显基本不在列） | Intel CPU / iGPU / Arc / NPU |
+| 典型用途 | 训练 + 推理全能，深度学习首选 | Linux 下 AMD 卡跑训练/推理 | 边缘/端侧推理、核显白嫖算力 |
+| Windows 体验 | 开箱即用 | 常需 WSL2 或等待 Windows 后端完善 | 开箱即用 |
+
+**选型速查**：
+
+- NVIDIA 卡 → CUDA，别犹豫
+- AMD 卡 + Linux → ROCm 可行，先查官方支持卡列表；AMD 卡 + Windows → 大概率退回 CPU 或 DirectML/ONNX Runtime 路线
+- Intel 核显/CPU/NPU、无独显的轻薄本 → OpenVINO（本项目路线）
+- 都没有 → 纯 CPU + 小参数量化模型（faster-whisper int8、Q4 gguf），本项目语音/旋律分析就是纯 CPU 跑的
+
 ## 目录结构
 
 ```
