@@ -70,7 +70,7 @@ class LocalVisionPlugin(Star):
 
     # OpenVINO 三件套：python 解释器 / worker 脚本 / IR 模型目录
     VISION_SERVER_EXE = Path(
-        r"C:\Users\ximen\.workbuddy\binaries\python\envs\default\Scripts\python.exe"
+        r"C:\Users/<user>\.workbuddy\binaries\python\envs\default\Scripts\python.exe"
     )
     VISION_MODEL_PATH = Path(
         r"D:\qqbot\models\qwen2vl-2b-ov"

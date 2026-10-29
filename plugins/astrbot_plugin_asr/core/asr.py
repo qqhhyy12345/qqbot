@@ -32,7 +32,7 @@ from pathlib import Path
 
 import aiohttp
 
-WORKER_PY = Path(r"C:\Users\ximen\.workbuddy\binaries\python\envs\default\Scripts\python.exe")
+WORKER_PY = Path(r"C:\Users/<user>\.workbuddy\binaries\python\envs\default\Scripts\python.exe")
 WORKER_SCRIPT = Path(__file__).resolve().parent / "asr_worker.py"
 MODEL_DIR = Path(r"D:\qqbot\models\faster-whisper-small")
 TEMP_DIR = Path(r"D:\qqbot\astrbot\data\temp")

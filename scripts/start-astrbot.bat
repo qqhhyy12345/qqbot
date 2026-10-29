@@ -3,7 +3,7 @@ chcp 65001 >nul
 title AstrBot (LLM bot framework)
 set PYTHONUTF8=1
 set PYTHONIOENCODING=utf-8
-set "PATH=C:\Users\ximen\.pyffmpeg\bin;%PATH%"
+set "PATH=C:\Users/<user>\.pyffmpeg\bin;%PATH%"
 cd /d "%~dp0astrbot"
 echo ============================================================
 echo  AstrBot

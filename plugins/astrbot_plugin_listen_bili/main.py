@@ -35,7 +35,7 @@ from .core.bili_client import MiniBili, UA
 PLUGIN_NAME = "astrbot_plugin_listen_bili"
 
 # ---- 可调参数 ----
-PYTHON_EXE = Path(r"C:\Users\ximen\.workbuddy\binaries\python\envs\default\Scripts\python.exe")
+PYTHON_EXE = Path(r"C:\Users/<user>\.workbuddy\binaries\python\envs\default\Scripts\python.exe")
 MELODY_SCRIPT = Path(__file__).resolve().parent / "core" / "melody_worker.py"
 TEMP_DIR = Path(r"D:\qqbot\astrbot\data\temp")
 BILI_COOKIE_CFG = Path(r"D:\qqbot\astrbot\data\config\astrbot_plugin_bilibili_config.json")

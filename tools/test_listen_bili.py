@@ -38,7 +38,7 @@ async def main():
         print("audio size:", dest.stat().st_size)
     t = time.time()
     import subprocess
-    WORKER_PY = r"C:/Users/ximen/.workbuddy/binaries/python/envs/default/Scripts/python.exe"
+    WORKER_PY = r"C:/Users/<user>/.workbuddy/binaries/python/envs/default/Scripts/python.exe"
     WORKER = r"D:/qqbot/astrbot/data/plugins/astrbot_plugin_listen_bili/core/audio_worker.py"
     job = json.dumps({"audio_path": str(dest), "max_minutes": 2})
     p = subprocess.run([WORKER_PY, WORKER, r"D:/qqbot/models/faster-whisper-small", "cpu"],
