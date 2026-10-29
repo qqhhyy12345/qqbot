@@ -166,6 +166,16 @@ Intel 出品的跨平台推理引擎：模型经 `optimum-cli` 导出成 IR 格�
 **`astrbot_plugin_contact_list`** — 联系人目录
 
 `llm_list_contacts` 工具（仅私聊可用）：好友/群列表查询，配合她主动找人、认人的场景。
+
+### 音乐能力
+
+**`astrbot_plugin_sheet_music`** — 看谱
+
+乐谱识别/描述工具，让她能读谱（配合听歌、唱歌场景）。
+
+**`astrbot_plugin_singing`** — 唱歌
+
+唱歌能力：按歌词与旋律要求合成演唱音频并作为语音发送（`send_sing`），依托 voice_tool 的语音发送链路。
 | `astrbot_plugin_contact_list` | 好友/群列表查询 |
 
 ## 设计要点
