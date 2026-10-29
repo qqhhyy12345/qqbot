@@ -6,6 +6,44 @@
 QQ 客户端(hook 注入) → SnowLuma(OneBot v11) → 反向 WS → AstrBot → 大模型 API
 ```
 
+## 部署前置：SnowLuma + AstrBot
+
+本项目代码不包含这两个框架本体，需要先独立部署（均为第三方/开源项目）：
+
+### 1. SnowLuma（QQ 协议端）
+
+- **仓库**：https://github.com/SnowLuma/SnowLuma
+- **文档**：https://snowluma.github.io/
+- **部署方式**：到 [Releases](https://github.com/SnowLuma/SnowLuma/releases/latest) 下载对应平台的完整版（内置 Node.js，推荐），Windows x64 为 `SnowLuma-vX.Y.Z-win-x64.zip`，解压即用：
+  - Windows：运行 `launcher.bat`，浏览器开 `http://localhost:5099`（初始账号 `admin`，密码在启动日志 `initial credentials:` 行）
+  - 无人值守部署需设置环境变量 `SNOWLUMA_ACCEPT_EULA=1` 和 `SNOWLUMA_ACCEPT_PRIVACY=1` 完成协议确认
+  - 登录 QQ 后自动注入 hook，转成 OneBot v11（HTTP 3000 / WS 3001）
+  - ⚠️ 非官方协议端接 QQ 有封号风险，**务必用小号**
+
+### 2. AstrBot（机器人框架）
+
+- **仓库**：https://github.com/AstrBotDevs/AstrBot
+- **文档**：https://astrbot.app/
+- **部署方式**（uv 安装，Python 3.12）：
+
+  ```bash
+  # Windows
+  set UV_TOOL_DIR=D:\qqbot\_uv_tools
+  set UV_TOOL_BIN_DIR=D:\qqbot\_uv_bin
+  uv tool install astrbot --python 3.12
+  astrbot init   # 初始化数据目录
+  astrbot run    # WebUI 默认 http://127.0.0.1:6185
+  ```
+
+  Docker 方式见官方文档：`docker run -p 6185:6185 soulter/astrbot`（挂载 `/AstrBot/data`）
+
+### 3. 对接（本项目的前提配置）
+
+1. SnowLuma WebUI → OneBot 配置：只监听 `127.0.0.1`，添加反向 WS 客户端指向 `ws://127.0.0.1:6199/ws`
+2. AstrBot WebUI → 平台适配器：启用 `aiocqhttp`（OneBot v11），端口 6199
+3. AstrBot → 服务提供商：配置 OpenAI 兼容接口（本项目用火山方舟 `deepseek-v4.1-flash`）
+4. 把本仓库 `plugins/` 下的插件复制到 `astrbot/data/plugins/`，重启 AstrBot 生效
+
 ## 目录结构
 
 ```
