@@ -12,10 +12,10 @@ CFG = r"D:\qqbot\astrbot\data\cmd_config.json"
 OUT = Path(r"D:\qqbot\bot-memory\archive\_legacy_group_split")
 
 LEGACY = [
-    ("snowluma:GroupMessage:<OWNER_QQ>_144808575", "你（主人）本人"),
-    ("snowluma:GroupMessage:3576388696_144808575", "群友 3576388696"),
-    ("snowluma:GroupMessage:3825551887_144808575", "群友 3825551887"),
-    ("snowluma:GroupMessage:2501413156_144808575", "群友 2501413156"),
+    ("snowluma:GroupMessage:<OWNER_QQ>_<GROUP_ID>", "你（主人）本人"),
+    ("snowluma:GroupMessage:<FRIEND_QQ>_<GROUP_ID>", "群友 <FRIEND_QQ>"),
+    ("snowluma:GroupMessage:3825551887_<GROUP_ID>", "群友 3825551887"),
+    ("snowluma:GroupMessage:2501413156_<GROUP_ID>", "群友 2501413156"),
 ]
 
 PROMPT = (
@@ -122,7 +122,7 @@ async def main():
     (OUT / "summaries.json").write_text(
         json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    md = ["# 群 144808575 旧分裂会话摘要（合并前留档）\n"]
+    md = ["# 群 <GROUP_ID> 旧分裂会话摘要（合并前留档）\n"]
     for umo, r in results.items():
         md.append(f"## {r['who']}\n\n{r['summary']}\n")
     (OUT / "summaries.md").write_text("\n".join(md), encoding="utf-8")

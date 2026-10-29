@@ -83,7 +83,7 @@ def main():
     targets = [
         ("linwan 私聊", "snowluma:FriendMessage:<OWNER_QQ>"),
         ("私聊 3201680698", "snowluma:FriendMessage:3201680698"),
-        ("群 144808575", "snowluma:GroupMessage:144808575"),
+        ("群 <GROUP_ID>", "snowluma:GroupMessage:<GROUP_ID>"),
     ]
 
     for label, umo in targets:

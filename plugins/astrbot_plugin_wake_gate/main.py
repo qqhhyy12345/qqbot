@@ -63,7 +63,7 @@ ONLY_GROUP_IDS: list[str] = []
 WAKE_WORDS: list[str] = ["/", "<BOT_NICK>", "人机", "鲸", "@<BOT_NICK>"]
 # 机器人在群里的昵称。QQ 上按昵称 at 时**不会**生成结构化 At 组件，
 # 只发一段纯文本 "@<BOT_NICK>"——所以必须靠文本兜底认。
-# 若以后改名，这里要跟着改（当前群 144808575 里显示为「<BOT_NICK>」）。
+# 若以后改名，这里要跟着改（当前群 <GROUP_ID> 里显示为「<BOT_NICK>」）。
 SELF_NICKNAMES: list[str] = ["<BOT_NICK>"]
 
 # ---- 被 @ 时注入给模型的硬指令 ----

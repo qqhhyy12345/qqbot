@@ -62,7 +62,7 @@ def main():
     targets = [
         ("linwan 私聊", "snowluma:FriendMessage:<OWNER_QQ>"),
         ("私聊 3201680698", "snowluma:FriendMessage:3201680698"),
-        ("群 144808575", "snowluma:GroupMessage:144808575"),
+        ("群 <GROUP_ID>", "snowluma:GroupMessage:<GROUP_ID>"),
     ]
 
     print(f"{'会话':<18}{'轮数':>5}{'全量token':>10}{'现在发送':>10}{'每轮省':>9}{'节省':>8}")

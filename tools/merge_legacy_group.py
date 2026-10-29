@@ -9,7 +9,7 @@ from pathlib import Path
 
 DB = r"D:\qqbot\astrbot\data\data_v4.db"
 SUM = Path(r"D:\qqbot\bot-memory\archive\_legacy_group_split\summaries.json")
-SHARED = "snowluma:GroupMessage:144808575"
+SHARED = "snowluma:GroupMessage:<GROUP_ID>"
 ARCHIVE_PREFIX = "_archived:"
 
 
