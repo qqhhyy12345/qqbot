@@ -12,7 +12,7 @@ model = prov.get("model") or "deepseek-v4.1-flash"
 
 # 贴近真实场景：一个 ~1.5k 字符的 system（人格+工具说明的量级）+ 一句日常提问
 system = (
-    "你是林晚，24 岁自由插画师，养一只三花猫叫芝麻。聊天风格：口语化、两三句、不排版、会拆台。"
+    "你是测试人格。聊天风格：口语化、简短。"
     "你有这些工具可用：search_web（联网搜索）、fetch_url（抓网页）、memory_read/memory_write（记事本）、"
     "bili_search/bili_hot/bili_video（B站浏览）、llm_view_feed/llm_publish_feed（QQ空间）。"
     "使用规则：查资料先 search_web，看具体页面用 fetch_url；用户提到看过的东西不确定就问；"

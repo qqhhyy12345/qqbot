@@ -55,7 +55,7 @@ async def count_tokens(session, label: str, text: str) -> int:
 
 
 async def main():
-    # ① 日志里真实那次 baike_lookup 输出（三花猫）
+    # ① 日志里真实那次 baike_lookup 输出（测试图）
     baike_out = Path(r"D:\qqbot\tools\_tmp_baike_out.txt")
     samples = []
     if baike_out.exists():
@@ -64,7 +64,7 @@ async def main():
         for marker in ("\n[2026-", "\nPrepare to send"):
             if marker in t:
                 t = t.split(marker)[0]
-        samples.append(("baike_lookup 实测(三花猫)", t.strip()))
+        samples.append(("baike_lookup 实测(测试图)", t.strip()))
 
     # ② 典型 search_web 输出（实跑一次）
     sys.path.insert(0, r"D:\qqbot\astrbot\data\plugins")
