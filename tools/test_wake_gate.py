@@ -79,7 +79,7 @@ NICK = eval(
     re.search(r"^SELF_NICKNAMES: list\[str\] = (.+)$", SRC, re.M).group(1), {}, {}
 )
 
-BOT = "<BOT_QQ>"      # 哈鲸鲸自己的号
+BOT = "<BOT_QQ>"      # <BOT_NICK>自己的号
 ME = "<OWNER_QQ>"       # 主人
 OTHER = "3825551887"    # 群友 哦鲸鲸
 THIRD = "3576388696"    # 群友 梵蒂冈御史大夫
@@ -127,21 +127,21 @@ for label, comp in [("AtAll", AtAll()), ("At(all)", At(qq="all"))]:
 
 print("\n[3d] @昵称 纯文本（真实根因回归）")
 # 来源：astrbot/data/logs/astrbot.log 18:11:47 那条被误掐的记录
-NICK = ["哈鲸鲸"]
-# QQ 上按昵称 at 不生成 At 组件，只发纯文本 "@哈鲸鲸"
-msgs = [Plain("@哈鲸鲸 我又来啦，这回听得见吗")]
+NICK = ["<BOT_NICK>"]
+# QQ 上按昵称 at 不生成 At 组件，只发纯文本 "@<BOT_NICK>"
+msgs = [Plain("@<BOT_NICK> 我又来啦，这回听得见吗")]
 ok, why = gate(msgs, BOT, WAKE, NICK)
-check("@哈鲸鲸 纯文本 → 放行（真实根因）", ok is True, f"got {ok} ({why})")
+check("@<BOT_NICK> 纯文本 → 放行（真实根因）", ok is True, f"got {ok} ({why})")
 # 反例：正文里提到昵称但不在开头，不能误判
-msgs2 = [Plain("刚才哈鲸鲸说的那个问题我想了想")]
+msgs2 = [Plain("刚才<BOT_NICK>说的那个问题我想了想")]
 ok, _ = gate(msgs2, BOT, WAKE, NICK)
 check("昵称在正文中 → 不算（防误伤）", ok is False)
 # 反例：@别人昵称
 msgs3 = [Plain("@鲸鲸 你再试试")]
 ok, _ = gate(msgs3, BOT, WAKE, NICK)
 check("@别人的昵称 → 掐断", ok is False)
-# 未传昵称参数时仍要放行 —— 靠的是 WAKE_WORDS 里那条 "@哈鲸鲸"。
-# 这条断言原先写成 "got is False"，是错的：WAKE_WORDS 含 "@哈鲸鲸"
+# 未传昵称参数时仍要放行 —— 靠的是 WAKE_WORDS 里那条 "@<BOT_NICK>"。
+# 这条断言原先写成 "got is False"，是错的：WAKE_WORDS 含 "@<BOT_NICK>"
 # （与 cmd_config.json 的 wake_prefix 保持一致），所以不传昵称参数也认。
 ok, why = gate(msgs, BOT, WAKE)
 check("不传昵称参数 → 仍放行（靠 wake_prefix 里的 @昵称）", ok is True, f"got {ok} ({why})")
@@ -159,7 +159,7 @@ print("\n[4] 放行情形：唤醒词（只看开头，跟 AstrBot 一致）")
 for w in WAKE:
     ok, why = gate([Plain(f"{w} 你在吗")], BOT, WAKE)
     check(f"唤醒词 {w!r} 开头 → 放行", ok is True, f"got {ok} ({why})")
-ok, _ = gate([Plain("你在吗 哈鲸鲸"), Plain("顺便问一下")], BOT, WAKE)
+ok, _ = gate([Plain("你在吗 <BOT_NICK>"), Plain("顺便问一下")], BOT, WAKE)
 check("唤醒词在中间 → 不算（与 AstrBot 一致）", ok is False)
 ok, _ = gate([Plain("鲸鱼是什么")], BOT, WAKE)
 check("“鲸鱼”开头会被唤醒（已知的宽松点）", ok is True)
@@ -195,12 +195,12 @@ cases_at = [
     ("aiocqhttp 的 At(all)", [At("all"), Plain(" 看下这个")], True),
     # QQ 按昵称 at 时不生成 At 组件，只在消息最前面放一段纯文本
     # （真实消息前面没有别的东西；日志里那句「[发送者：...]」是渲染加的）
-    ("@昵称（纯文本兜底）", [Plain("@哈鲸鲸 在吗")], True),
-    ("@昵称 + 后跟内容", [Plain("@哈鲸鲸 帮我看下这个")], True),
-    ("@昵称 超出 12 字窗口 → 不算", [Plain("喂喂喂哈鲸鲸在不在啊")], False),
+    ("@昵称（纯文本兜底）", [Plain("@<BOT_NICK> 在吗")], True),
+    ("@昵称 + 后跟内容", [Plain("@<BOT_NICK> 帮我看下这个")], True),
+    ("@昵称 超出 12 字窗口 → 不算", [Plain("喂喂喂<BOT_NICK>在不在啊")], False),
     ("引用她", [Reply(BOT), Plain(" 这条怎么说")], True),
     ("@别人 → 不算被 @", [At(THIRD), Plain(" 在吗")], False),
-    ("只有昵称出现在正文中间 → 不算", [Plain(" 我刚才问过哈鲸鲸了")], False),
+    ("只有昵称出现在正文中间 → 不算", [Plain(" 我刚才问过<BOT_NICK>了")], False),
 ]
 for name, msgs, want in cases_at:
     got, why = at_gate(msgs, BOT, NICK)

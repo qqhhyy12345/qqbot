@@ -34,7 +34,7 @@ PROTECTED_TYPES = {"feedback"}   # 指导类不允许被单纯删除
 PROTECTED_NAME_PREFIX = "user-"  # people 作用域里的一人一档
 
 # 全局记忆会被注入到每个人的对话里，出现这些词就是泄漏
-PII_PATTERNS = ("林晚", "<OWNER_QQ>", "创建人")
+PII_PATTERNS = ("<PRIMARY_NAME>", "<OWNER_QQ>", "创建人")
 
 sys.path.insert(0, PLUGIN_DIR)
 from core import consolidate, memstore  # noqa: E402

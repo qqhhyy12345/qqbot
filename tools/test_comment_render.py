@@ -76,7 +76,7 @@ def main():
 
     print("\n[7] 真实数据：刚拉到的「爱你」那条")
     real = Post(
-        tid="8f3e55aaf5b1", text="今天把旧相册翻了一遍。", name="哈鲸鲸",
+        tid="8f3e55aaf5b1", text="今天把旧相册翻了一遍。", name="<BOT_NICK>",
         comments=[mk("leosooyaaa", "爱你", uin=123456)],
     )
     out = QzonePlugin._format_comments(FAKE, real)

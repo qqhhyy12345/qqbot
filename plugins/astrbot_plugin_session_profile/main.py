@@ -49,7 +49,7 @@ from .catalog import BY_KEY, capability_map
 
 PLUGIN_NAME = "astrbot_plugin_session_profile"
 
-# 主人 QQ 号（与人格-林晚.md、wake_gate 的分流一致）
+# 主人 QQ 号（与人格-<PRIMARY_NAME>.md、wake_gate 的分流一致）
 OWNER_ID = "<OWNER_QQ>"
 
 # 各画像放开的分类（key 见 catalog.py）。没列出的分类 = 该会话裁掉。

@@ -5,7 +5,7 @@ astrbot_plugin_emotion 的 state/signals：闲聊留痕 + 命中规则的强事�
 
     python tools/init_emotion_state.py [起始时间 YYYY-MM-DD] [结束时间 YYYY-MM-DD]
 
-群消息只回放"真的叫她"的那些（@她 / @全体 / 引用她 / @哈鲸鲸 / 唤醒词开头），
+群消息只回放"真的叫她"的那些（@她 / @全体 / 引用她 / @<BOT_NICK> / 唤醒词开头），
 与 astrbot_plugin_wake_gate 的判定一致——没叫她的群聊她根本没进 LLM，不该记账。
 """
 
@@ -24,7 +24,7 @@ OUT = ROOT / "astrbot" / "data" / "plugin_data" / "astrbot_plugin_emotion" / "st
 DB = next((ROOT / "snowluma" / "data").glob("*/messages.db"))
 
 OWNER_ID = "<OWNER_QQ>"
-WAKE_WORDS = ("/", "哈鲸鲸", "人机", "鲸", "@哈鲸鲸")
+WAKE_WORDS = ("/", "<BOT_NICK>", "人机", "鲸", "@<BOT_NICK>")
 
 
 def _load(name: str):
@@ -47,7 +47,7 @@ def addressed(parts: dict, self_id: str, reply_author: dict) -> bool:
         if p["type"] == "reply" and reply_author.get(str(p.get("id"))) == self_id:
             return True
     head = parts["text"].lstrip()[:12]
-    if head.startswith("@哈鲸鲸"):
+    if head.startswith("@<BOT_NICK>"):
         return True
     return any(w and parts["text"].startswith(w) for w in WAKE_WORDS)
 

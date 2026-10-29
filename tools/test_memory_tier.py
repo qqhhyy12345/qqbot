@@ -114,7 +114,7 @@ r_none = mt._estimate_request_tokens(_FakeReq(small_ctx, usage=None), small_ctx)
 check("conversation 为 None 不崩", r_none == r0, f"got {r_none}")
 
 # 固定开销：system_prompt + 工具定义必须算进去（这正是旧版漏掉的 ~5,459）
-sp = "你是哈鲸鲸，一个活泼的角色。" * 20
+sp = "你是<BOT_NICK>，一个活泼的角色。" * 20
 tools = _FakeToolSet([_FakeTool("search_web", "搜索工具说明。" * 100)])
 r_sp = mt._estimate_request_tokens(_FakeReq(small_ctx, 0, sp), small_ctx)
 check("system_prompt 计入开销", r_sp > r0, f"{r0} -> {r_sp}")

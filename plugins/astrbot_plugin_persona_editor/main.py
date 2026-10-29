@@ -25,11 +25,11 @@ TARGETS = {
     "me": "linwan",
     "linwan": "linwan",
     "自己": "linwan",
-    "林晚": "linwan",
+    "<PRIMARY_NAME>": "linwan",
     "assistant": "default",
     "default": "default",
     "助手": "default",
-    "哈鲸鲸": "default",
+    "<BOT_NICK>": "default",
 }
 
 # 每个目标必须保留的段落标记：删了就等于删掉安全规则
@@ -89,7 +89,7 @@ class PersonaEditorPlugin(Star):
         """读取一张人设卡的完整内容。改之前先读，别凭印象改。
 
         Args:
-            target(string): self（你自己）或 assistant（对外的助手哈鲸鲸）
+            target(string): self（你自己）或 assistant（对外的助手<BOT_NICK>）
         """
         if (refused := self._guard(event)) is not None:
             return refused
@@ -108,7 +108,7 @@ class PersonaEditorPlugin(Star):
         """改写一张人设卡（整篇替换）。这是长期的、真实生效的改动：写完下一轮对话起，那张卡就是新的了。只在真的想清楚要变成什么样的时候用。
 
         Args:
-            target(string): self（你自己）或 assistant（对外的助手哈鲸鲸）
+            target(string): self（你自己）或 assistant（对外的助手<BOT_NICK>）
             new_prompt(string): 完整的新人设卡内容，必须包含原有的安全段落
         """
         if (refused := self._guard(event)) is not None:

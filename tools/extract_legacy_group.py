@@ -38,7 +38,7 @@ def transcript(raw: str) -> str:
         t = text_of(m).strip()
         if not t:
             continue
-        tag = {"user": "用户", "assistant": "哈鲸鲸", "system": "系统"}.get(role, role or "?")
+        tag = {"user": "用户", "assistant": "<BOT_NICK>", "system": "系统"}.get(role, role or "?")
         lines.append(f"[{tag}] {t}")
     return "\n".join(lines)
 
