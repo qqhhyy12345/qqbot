@@ -1,0 +1,18 @@
+name: astrbot_plugin_persona_editor
+desc: 让创建人私聊里的那个她，能读写自己和对外的助手人格卡，并按自己的方向成长。
+help: |-
+  提供两个工具：persona_read（读人设卡）、persona_edit（改人设卡）。
+
+  生效范围写死：只有创建人私聊的会话（snowluma:FriendMessage:<OWNER_QQ>）能调用，
+  其他任何人、任何群，调用都会被拒绝——这是硬编码，不是靠提示词自觉。
+
+  硬性保护：
+  - 不许删掉「【文件权限】」段（林晚还要「【对外的样子】」，助手还要「【内部设定」、「【声音】」）
+  - 单次改动幅度限制在原长度 50%~150%，绝对长度 200~6000 字
+  - 每次改动前把旧版备份到 plugin_data/astrbot_plugin_persona_editor/history/
+  - 改完立即生效，不需要重启
+version: v1.0.0
+author: 本地自建
+display_name: 人设卡编辑器
+short_desc: 让她能决定自己长成什么样。
+astrbot_version: ">=4.24.0"

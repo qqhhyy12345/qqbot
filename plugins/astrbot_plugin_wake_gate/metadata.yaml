@@ -1,0 +1,24 @@
+name: astrbot_plugin_wake_gate
+desc: 群里没喊她就不进对话，在 LLM 调用前掐断，省 token 也省得她插嘴。
+help: |-
+  挂在 on_waiting_llm_request 钩子上，判断这条群消息到底是不是在叫她。
+
+  放行（认为在叫她）：
+  - @ 了她本人
+  - 用了唤醒词（/、哈鲸鲸、人机、鲸）
+  - 引用了她的消息
+  - @ 了全体成员
+
+  其余情况直接 stop_event()。该钩子跑在 session lock 之前、请求发出之前，
+  掐掉意味着这次对话完全不会发生——不烧 token、不写 conversations、不产生记忆。
+
+  只管群聊，私聊一律放行。判定用 event.get_messages() 里的原始 At 组件，
+  不依赖对话表里那段 @昵称 文本（昵称会变、会带歧义）。
+
+  为什么不直接改 waking_check：AstrBot 自身的唤醒判定本来是对的，
+  问题出在消息已经进了对话、模型被卷进来之后。这里补的是第二道闸。
+version: v1.0.0
+author: 本地自建
+display_name: 唤醒闸门
+short_desc: 群里没喊她，就不进对话。
+astrbot_version: ">=4.24.0"

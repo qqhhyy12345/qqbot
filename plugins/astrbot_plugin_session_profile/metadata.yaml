@@ -1,0 +1,7 @@
+name: astrbot_plugin_session_profile
+display_name: 会话画像
+desc: 按会话类型（主人私聊/普通私聊/群聊）裁剪 LLM 工具与提示词小节，并注入能力地图；是未来结构化工具目录的骨架
+help: 略
+version: v1.0.0
+author: 本地自建
+repo: 本地

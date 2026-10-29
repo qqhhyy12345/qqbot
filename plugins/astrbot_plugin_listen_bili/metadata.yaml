@@ -1,0 +1,5 @@
+name: astrbot_plugin_listen_bili
+desc: 听B站视频——下载音频交给 astrbot_plugin_asr 转文字（faster-whisper small, CPU）+ 本地 librosa 旋律特征，听完即删音频
+version: v1.1.0
+author: 本地自建
+repo: local

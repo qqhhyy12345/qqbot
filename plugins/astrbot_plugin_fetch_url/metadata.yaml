@@ -1,0 +1,18 @@
+name: astrbot_plugin_fetch_url
+desc: 给模型一个 fetch_url 工具，抓取网页正文（去导航/脚本），带内网访问防护。
+help: |-
+  工具：fetch_url(url, max_chars)——抓一个网页并抽出正文，返回标题和正文片段。
+
+  安全边界（代码硬拦截，不是提示词）：
+  - 只允许 http/https
+  - 拒绝内网、回环、链路本地地址（防止被引导去访问本机的面板和接口）
+  - 跳转后的最终地址同样校验
+  - 单次响应上限 2 MB，超时 20 秒，只接受 text/html 或 text/plain
+  - 正文默认截断 3000 字
+
+  依赖：只用 AstrBot 已内置的 aiohttp 与 bs4，无需额外安装。
+version: v1.0.0
+author: 本地自建
+display_name: 网页正文抓取
+short_desc: 让她能真正读完一个网页，而不只是看摘要。
+astrbot_version: ">=4.24.0"

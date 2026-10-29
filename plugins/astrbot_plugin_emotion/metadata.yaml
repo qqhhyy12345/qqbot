@@ -1,0 +1,7 @@
+name: astrbot_plugin_emotion
+display_name: 情绪状态
+desc: 她自己的五轴状态（愉悦/唤醒/亲近/疲惫/兴致），按人记账。每句留痕、按亲疏加权、快慢双分量（隔夜不翻篇），每轮以一句人话注入；另有自调工具 adjust_mood。不读对方情绪、不接语音。
+help: /情绪 —— 查看当前状态（主人）
+version: v0.1.0
+author: 本地自建
+repo: 本地

@@ -1,0 +1,16 @@
+name: astrbot_plugin_voice_tool
+desc: 给模型一个 send_voice 工具，让它自己决定什么时候用语音说话，而不是按概率随机发；返回 已发送=1 / 未发送=0 状态码，合成音频发完即删。
+help: |-
+  装上后模型多了一个 send_voice 工具：想出声时自己调，平时正常打字。
+
+  返回 已发送=1 表示已发出去（模型不必再确认），未发送=0（原因）表示没发成、改用文字。
+  合成出来的 wav 放在 AstrBot temp 里，发送后立刻删除。
+
+  不需要打开 provider_tts_settings.enable：那个开关只管"随机自动语音"，
+  本插件会直接取配置里的 TTS 服务商（当前是 Edge TTS / 晓伊），两者互不影响。
+  建议把 provider_tts_settings.enable 保持 false，否则会和本工具叠加。
+version: v1.1.0
+author: 本地自建
+display_name: 语音工具（模型自选）
+short_desc: 让她自己决定要不要开口。
+astrbot_version: ">=4.24.0"

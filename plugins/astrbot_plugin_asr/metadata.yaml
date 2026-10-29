@@ -1,0 +1,17 @@
+name: astrbot_plugin_asr
+display_name: 本地语音转文字
+desc: 本地语音转文字（faster-whisper small, int8 CPU）——QQ 语音消息自动转写、音频直链转写，并向其他插件提供 transcribe_file 接口
+help: |-
+  三件事：
+
+  1. 给其他插件用的接口：`from data.plugins.astrbot_plugin_asr.core.asr import transcribe_file`
+     然后 `await transcribe_file(path, max_minutes=5)`，返回
+     `{"ok": True, "text": "...", "duration_s": 123}`。listen_bili 已改为调用它。
+  2. QQ 语音消息自动转写：on_llm_request 里把 Record 换成文字，摘掉音频附件，
+     转写完立刻删掉 temp 里的语音文件（只听不留；只删 temp 目录内的文件）。
+  3. 音频直链转写：tool `asr_transcribe`，只收 http(s) 直链，下载到 temp，转完即删。
+
+  模型/解释器路径在 core/asr.py 顶部；单次上限 15 分钟，同一时刻只跑一个 worker。
+version: v1.0.0
+author: 本地自建
+repo: 本地

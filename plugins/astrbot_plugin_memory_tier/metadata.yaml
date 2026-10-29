@@ -1,0 +1,25 @@
+name: astrbot_plugin_memory_tier
+desc: 分层记忆——把过老的对话流水归档成持久摘要，只保留近期原文，降低每轮上下文同时不让机器人健忘。
+help: |-
+  挂 on_llm_request 钩子，在请求发出前改写 contexts：
+
+  - 最近 15 轮保留原文（接得上话）
+  - 更老的轮次压成摘要，落盘到 bot-memory/archive/，**只压一次**
+  - 游标持久化，下次请求直接读摘要，不重算、不漂移
+
+  为什么需要它：AstrBot 内置的上下文压缩是一次性的，压完只用于本次请求、
+  不回写任何地方。结果每轮都在重处理同一批老历史，摘要也不留档。
+
+  安全边界：
+  - 绝不改动 conversations 表，只改"本次请求读到的东西"，删插件即恢复原状
+  - 摘要失败 = 什么都不改，绝不阻塞回复
+  - 限频：同一会话 5 分钟内只归档一次
+  - 默认只对 snowluma:FriendMessage:<OWNER_QQ> 生效，改 ONLY_UMO 可放开
+
+  可调参数（main.py 顶部）：
+  KEEP_RECENT_ROUNDS=15 / SOFT_LIMIT_TOKENS=20000 / MAX_ARCHIVE_ROUNDS=30
+version: v1.0.0
+author: 本地自建
+display_name: 分层记忆
+short_desc: 老对话压成摘要存起来，她就不会忘。
+astrbot_version: ">=4.24.0"

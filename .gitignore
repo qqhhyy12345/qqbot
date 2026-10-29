@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# 本地数据（不在仓库，双保险）
+*.db
+*.db-wal
+*.db-shm
+*.log
+*.zip
+
+# 系统杂项
+Thumbs.db
+.DS_Store

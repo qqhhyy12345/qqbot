@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>情绪状态</title>
+    <style>
+      :root {
+        --bg: #f5f6f8;
+        --card: #ffffff;
+        --line: #e4e6eb;
+        --fg: #1c1e21;
+        --muted: #7a828c;
+        --p: #d2647a;
+        --a: #d9932f;
+        --c: #2fa39a;
+        --f: #5b7fa6;
+        --i: #7a6bd6;
+        --neg: #b3503f;
+        --shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 8px 24px rgba(16, 24, 40, 0.04);
+      }
+      html[data-theme="dark"] {
+        --bg: #14161a;
+        --card: #1c1f24;
+        --line: #2b3038;
+        --fg: #e8eaed;
+        --muted: #8b949e;
+        --p: #e58a9a;
+        --a: #e0a458;
+        --c: #4ecdc4;
+        --f: #7fa6d0;
+        --i: #9d8df1;
+        --neg: #e0786a;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.25);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font: 14px/1.6 -apple-system, "Segoe UI", "Microsoft YaHei", system-ui, sans-serif;
+      }
+      .shell {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 24px 20px 48px;
+      }
+
+      header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 650;
+        letter-spacing: 0.2px;
+      }
+      .sub {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 12.5px;
+      }
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .stamp {
+        color: var(--muted);
+        font-size: 12px;
+        font-variant-numeric: tabular-nums;
+      }
+      .btn {
+        border: 1px solid var(--line);
+        background: var(--card);
+        color: var(--fg);
+        border-radius: 8px;
+        padding: 6px 14px;
+        font-size: 13px;
+        cursor: pointer;
+      }
+      .btn:hover {
+        border-color: var(--muted);
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+
+      .error {
+        margin-bottom: 16px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--h);
+        color: var(--h);
+        background: color-mix(in srgb, var(--h) 10%, transparent);
+        font-size: 13px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 14px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 16px 18px;
+        box-shadow: var(--shadow);
+      }
+      .card-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .card-head h2 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .owner-tag {
+        margin-left: 6px;
+        padding: 1px 7px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--c);
+        border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
+      }
+
+      .axis {
+        display: grid;
+        grid-template-columns: 42px 1fr 58px;
+        align-items: center;
+        gap: 10px;
+        margin: 9px 0;
+        font-size: 12.5px;
+      }
+      .axis .tag {
+        color: var(--muted);
+      }
+      .axis b {
+        text-align: right;
+        font-weight: 550;
+        font-variant-numeric: tabular-nums;
+      }
+      .track {
+        position: relative;
+        height: 8px;
+        border-radius: 999px;
+        background: color-mix(in srgb, var(--muted) 18%, transparent);
+        overflow: hidden;
+      }
+      .fill {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 999px;
+      }
+      .fill.p {
+        background: var(--p);
+      }
+      .fill.a {
+        background: var(--a);
+      }
+      .fill.c {
+        background: var(--c);
+      }
+      .fill.f {
+        background: var(--f);
+      }
+      .fill.i {
+        background: var(--i);
+      }
+      .base {
+        position: absolute;
+        top: -2px;
+        bottom: -2px;
+        width: 2px;
+        border-radius: 2px;
+        background: var(--fg);
+        opacity: 0.28;
+      }
+
+      /* 慢分量：隔夜还不散的那点余味，档位看不出来，只能单独给一条 */
+      .slow {
+        display: grid;
+        grid-template-columns: 42px 1fr 58px;
+        align-items: center;
+        gap: 10px;
+        margin: 2px 0 0;
+        font-size: 11.5px;
+        color: var(--muted);
+      }
+      .slow .track {
+        height: 5px;
+        background: var(--line);
+      }
+      .slow .mid {
+        position: absolute;
+        left: 50%;
+        top: -1px;
+        bottom: -1px;
+        width: 1px;
+        background: var(--muted);
+        opacity: 0.55;
+      }
+      .slow .fill {
+        border-radius: 2px;
+        background: color-mix(in srgb, var(--sc, var(--muted)) 75%, transparent);
+      }
+      .slow .fill.neg {
+        background: var(--neg);
+      }
+      .slow b {
+        text-align: right;
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .mood {
+        margin: 14px 0 0;
+        padding-top: 12px;
+        border-top: 1px dashed var(--line);
+        font-size: 13.5px;
+      }
+      .residual {
+        margin: 2px 0 0;
+        font-size: 12.5px;
+        color: var(--muted);
+      }
+      .gauge {
+        margin: 10px 0 0;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: color-mix(in srgb, var(--muted) 9%, transparent);
+        color: var(--muted);
+        font-size: 12px;
+        font-variant-numeric: tabular-nums;
+        overflow-wrap: anywhere;
+      }
+
+      .empty {
+        padding: 28px 8px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <div>
+          <h1>情绪状态</h1>
+          <p class="sub">五轴按人记账 · 只读 · 每轮对话后按衰减和事件更新，闲聊也会推一点点</p>
+        </div>
+        <div class="actions">
+          <span class="stamp" id="stamp">加载中…</span>
+          <button class="btn" id="refresh" type="button">刷新</button>
+        </div>
+      </header>
+
+      <div class="error" id="error" hidden></div>
+      <div class="grid" id="persons"></div>
+    </main>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+
+      function fmtTime(sec) {
+        if (!sec) return "—";
+        const d = new Date(sec * 1000);
+        if (Number.isNaN(d.getTime())) return "—";
+        const pad = (n) => String(n).padStart(2, "0");
+        const now = new Date();
+        const sameDay = d.toDateString() === now.toDateString();
+        const time = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        return sameDay ? time : `${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${time}`;
+      }
+
+      function el(tag, cls, text) {
+        const node = document.createElement(tag);
+        if (cls) node.className = cls;
+        if (text !== undefined) node.textContent = text;
+        return node;
+      }
+
+      function bar(key, value, base) {
+        const track = el("div", "track");
+        const fill = el("div", "fill " + key);
+        fill.style.width = Math.max(0, Math.min(1, value)) * 100 + "%";
+        track.append(fill);
+        if (typeof base === "number") {
+          const tick = el("i", "base");
+          tick.style.left = base * 100 + "%";
+          track.append(tick);
+        }
+        return track;
+      }
+
+      function slowBar(key, value, cap) {
+        const track = el("div", "track");
+        track.style.setProperty("--sc", `var(--${key})`);
+        const fill = el("div", "fill" + (value < 0 ? " neg" : ""));
+        const span = Math.min(Math.abs(value) / (cap || 0.25), 1) * 50;
+        fill.style.left = value < 0 ? 50 - span + "%" : "50%";
+        fill.style.width = span + "%";
+        track.append(el("i", "mid"), fill);
+        return track;
+      }
+
+      function capOf(caps, key) {
+        const pair = caps && caps[key];
+        if (!pair) return 0.25;
+        return Math.max(Math.abs(pair[0]), Math.abs(pair[1]));
+      }
+
+      function personCard(p, names, axes, caps) {
+        const card = el("article", "card");
+        const head = el("div", "card-head");
+        const title = el("h2", null, p.owner ? "主人 · " + p.uid : p.uid);
+        if (p.owner) title.append(el("span", "owner-tag", "本人"));
+        head.append(title);
+        head.append(el("span", "muted", "更新 " + fmtTime(p.last)));
+        card.append(head);
+
+        axes.forEach((key) => {
+          const row = el("div", "axis");
+          row.append(el("span", "tag", names[key] || key));
+          row.append(bar(key, p.vals[key], p.base[key]));
+          row.append(el("b", null, Number(p.vals[key]).toFixed(4)));
+          card.append(row);
+
+          const slow = p.slow ? Number(p.slow[key]) : 0;
+          if (Math.abs(slow) >= 0.005) {
+            const sub = el("div", "slow");
+            sub.append(el("span", null, "余味"));
+            sub.append(slowBar(key, slow, capOf(caps, key)));
+            sub.append(el("b", null, (slow >= 0 ? "+" : "") + slow.toFixed(3)));
+            card.append(sub);
+          }
+        });
+
+        card.append(el("p", "mood", p.text || "—"));
+        if (p.residual) {
+          card.append(el("p", "residual", "提示词里会多一句：" + p.residual));
+        }
+        const meta = `愉悦锚点 ${Number(p.p_anchor).toFixed(2)} · 亲近锚点 ${Number(p.anchor).toFixed(2)} · 话语权重 ${Number(p.weight).toFixed(2)}`;
+        card.append(el("p", "gauge", p.gauge + "（" + meta + "）"));
+        return card;
+      }
+
+      function showError(message) {
+        const box = $("error");
+        box.hidden = !message;
+        box.textContent = message || "";
+      }
+
+      async function load() {
+        const bridge = window.AstrBotPluginPage;
+        if (!bridge) {
+          showError("没拿到 AstrBot 页面桥接，请从「插件」页里的按钮打开这个页面。");
+          return;
+        }
+        try {
+          const raw = await bridge.apiGet("page/state");
+          const data = raw && typeof raw === "object" && "data" in raw ? raw.data : raw;
+          if (!data || data.status === "error") {
+            showError("取数失败：" + ((data && data.message) || "未知错误"));
+            return;
+          }
+          showError("");
+
+          const list = $("persons");
+          list.textContent = "";
+          const axes = data.axes || ["p", "a", "c", "f", "i"];
+          const names = data.names || {};
+          if (!data.persons || !data.persons.length) {
+            list.append(el("div", "empty", "还没有数据——插件重启并收到消息后这里就会出现。"));
+          } else {
+            data.persons.forEach((p) => list.append(personCard(p, names, axes, data.caps)));
+          }
+          $("stamp").textContent = "更新于 " + fmtTime(data.now);
+        } catch (err) {
+          showError("取数失败：" + (err && err.message ? err.message : String(err)));
+        }
+      }
+
+      $("refresh").addEventListener("click", load);
+      document.addEventListener("DOMContentLoaded", load);
+      setInterval(load, 30000);
+    </script>
+  </body>
+</html>

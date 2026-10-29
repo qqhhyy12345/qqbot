@@ -1,0 +1,7 @@
+name: astrbot_plugin_bilibili
+display_name: B站浏览
+desc: 只读逛B站——搜视频、看热门、看视频详情与热评、看UP主动态（写操作二期再议）
+help: 在WebUI插件配置里粘贴B站Cookie后可看UP主动态
+version: v0.1.0
+author: 本地自建
+repo: 本地

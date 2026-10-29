@@ -1,0 +1,19 @@
+name: astrbot_plugin_no_leak
+desc: 出站前剥掉模型偶尔复现的内部标记（system_reminder 等），防止提示词泄露到聊天窗口。
+help: |-
+  挂在「发送消息前」钩子（on_decorating_result），对每条出站回复做净化：
+
+  - 剥掉成对的 <system_reminder>...</system_reminder>（支持跨行）
+  - 剥掉落单的开标签/闭标签，以及 system-reminder、system reminder 这类变体
+  - 如果整条回复剥完变成空的，直接拦下不发，不会给对面发空消息
+
+  只处理文本组件（Plain），图片、At 等组件不受影响。
+
+  设计取舍：不改 AstrBot 核心源码，避免 pip 升级时补丁被覆盖。
+  根因在 astr_main_agent.py:1035——提醒被塞进了用户消息区而非 system role，
+  这里只做出站兜底，不改变模型能看到的东西。
+version: v1.0.0
+author: 本地自建
+display_name: 出站净化
+short_desc: 别把内部提示词发到聊天里。
+astrbot_version: ">=4.24.0"

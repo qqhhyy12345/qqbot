@@ -1,0 +1,7 @@
+{
+  "cookie": {
+    "description": "B站Cookie（登录态）",
+    "type": "string",
+    "hint": "浏览器登录B站后 F12 → Network → 任选一个 api.bilibili.com 请求 → Request Headers → 复制整段 Cookie 粘贴到这里。只用于只读浏览（看UP主动态），插件不做任何点赞/评论/发帖等写操作。不填也能搜视频、看热门。"
+  }
+}

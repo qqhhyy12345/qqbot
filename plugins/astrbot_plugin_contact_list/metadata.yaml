@@ -1,0 +1,7 @@
+name: astrbot_plugin_contact_list
+display_name: 联系人列表
+desc: 给模型一个查看QQ好友列表和群列表的工具，仅私聊可用，缓存一天一刷，浩越说加了新好友时强制刷新
+help: 略
+version: v1.0.0
+author: 本地自建
+repo: 本地

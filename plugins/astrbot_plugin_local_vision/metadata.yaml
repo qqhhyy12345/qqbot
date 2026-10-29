@@ -1,0 +1,25 @@
+name: astrbot_plugin_local_vision
+desc: 聊天图片走本地视觉转述——图片不进云端上下文，只把一句中文描述发过去，省 token。
+help: |-
+  挂 on_llm_request 钩子，在请求发出前把图片换成文字：
+
+  - 本轮新图（req.image_urls）→ 本地 Qwen2-VL-2B 转述 → 清空 image_urls
+  - 历史里的图（contexts 里 type=="image_url"）→ 同样换成文本
+  - 引用消息里的图（extra_user_content_parts 里的 ImageURLPart）→ 同上
+
+  为什么需要：provider 的 modalities 为空列表会被判定成「支持图片」，
+  图片就以 base64 原样进请求，一张约 1,500 token，还会在后续每轮跟着回传。
+
+  安全边界：
+  - 任何一张图认不出来 → 保留原图，退回云端视觉，绝不让她看不见图
+  - 服务懒启动，闲置 20 秒自动退出，不常驻显存（玩游戏不打架）
+  - 转述结果按图片哈希缓存，同一张图只算一次
+  - 与 QQ 空间插件共用 1234 端口，靠 /health 复用，不会拉起两个 llama-server
+
+  可调参数（main.py 顶部）：
+  VISION_MAX_IMAGES=3 / VISION_MAX_EDGE=960 / VISION_IDLE_TIMEOUT=20
+version: v1.0.0
+author: 本地自建
+display_name: 本地视觉
+short_desc: 聊天里的图，本地看完只用一句话告诉云端。
+astrbot_version: ">=4.24.0"
