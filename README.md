@@ -69,14 +69,14 @@ Intel 出品的跨平台推理引擎：模型经 `optimum-cli` 导出成 IR 格�
 | --- | --- | --- | --- |
 | 厂商 | NVIDIA | AMD | Intel |
 | 生态成熟度 | 最成熟，所有主流框架一等公民 | 追赶中，Linux 支持好，**Windows 支持有限**（HIP SDK 渐进补齐） | Intel 全家桶内成熟 |
-| 适用硬件 | NVIDIA 显卡（游戏卡即可） | AMD Radeon（官方仅支持部分型号，如 RX 7900/9000 系；A 卡核显基本不在列） | Intel CPU / iGPU / Arc / NPU |
+| 适用硬件 | NVIDIA 显卡（游戏卡即可） | AMD Radeon **RDNA3（RX 7000 系）与 RDNA4（RX 9000 系）** 已官方支持，更老的 RDNA1/2 部分可用；A 卡核显基本不在列 | Intel CPU / iGPU / Arc / NPU |
 | 典型用途 | 训练 + 推理全能，深度学习首选 | Linux 下 AMD 卡跑训练/推理 | 边缘/端侧推理、核显白嫖算力 |
 | Windows 体验 | 开箱即用 | 常需 WSL2 或等待 Windows 后端完善 | 开箱即用 |
 
 **选型速查**：
 
 - NVIDIA 卡 → CUDA，别犹豫
-- AMD 卡 + Linux → ROCm 可行，先查官方支持卡列表；AMD 卡 + Windows → 大概率退回 CPU 或 DirectML/ONNX Runtime 路线
+- AMD 卡（RDNA3/RDNA4）→ ROCm 官方支持，Linux 体验最好；Windows 后端在逐步完善中，不稳时退 WSL2 或 ONNX Runtime-DirectML；A 卡核显仍建议 CPU/OpenVINO 路线
 - Intel 核显/CPU/NPU、无独显的轻薄本 → OpenVINO（本项目路线）
 - 都没有 → 纯 CPU + 小参数量化模型（faster-whisper int8、Q4 gguf），本项目语音/旋律分析就是纯 CPU 跑的
 
