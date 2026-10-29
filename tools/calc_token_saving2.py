@@ -82,7 +82,7 @@ def main():
 
     targets = [
         ("linwan 私聊", "snowluma:FriendMessage:<OWNER_QQ>"),
-        ("私聊 3201680698", "snowluma:FriendMessage:3201680698"),
+        ("私聊 <FRIEND_QQ>", "snowluma:FriendMessage:<FRIEND_QQ>"),
         ("群 <GROUP_ID>", "snowluma:GroupMessage:<GROUP_ID>"),
     ]
 

@@ -81,18 +81,18 @@ NICK = eval(
 
 BOT = "<BOT_QQ>"      # <BOT_NICK>自己的号
 ME = "<OWNER_QQ>"       # 主人
-OTHER = "3825551887"    # 群友 哦鲸鲸
+OTHER = "<MEMBER_QQ1>"    # 群友 哦鲸鲸
 THIRD = "<FRIEND_QQ>"    # 群友 梵蒂冈御史大夫
 
 print(f"机器人自号 {BOT} / 唤醒词 {WAKE}\n")
 
 print("[1] 真实群聊样本：没喊她 → 应该掐断")
 cases_nowake = [
-    ("@ 别人（梵蒂冈）", [Plain("[发送者：QQ名 哦鲸鲸？！｜QQ号 3825551887]"),
+    ("@ 别人（梵蒂冈）", [Plain("[发送者：QQ名 哦鲸鲸？！｜QQ号 <MEMBER_QQ1>]"),
                       At(THIRD), Plain(" 嗯，那是我自己一行一行改的，所以读着像我")]),
     ("@ 别人（拉普拉斯）", [Plain("[发送者：QQ名 哦鲸鲸？！｜QQ号 3355017338]"),
                        At(ME), Plain(" 踏马的我用的都是手机上的免费的")]),
-    ("纯闲聊，没人@", [Plain("[发送者：QQ名 哦鲸鲸？！｜QQ号 3825551887]"),
+    ("纯闲聊，没人@", [Plain("[发送者：QQ名 哦鲸鲸？！｜QQ号 <MEMBER_QQ1>]"),
                     Plain("我见过的坑：一次改一大片，改完自己都认不出自己")]),
     ("@ 两个人但没她", [At(THIRD), Plain(" "), At(ME)]),
 ]

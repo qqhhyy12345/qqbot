@@ -30,7 +30,7 @@ rows = dict(c.execute("select user_id, content from conversations"))
 
 for umo in (
     "snowluma:FriendMessage:<OWNER_QQ>",
-    "snowluma:FriendMessage:3201680698",
+    "snowluma:FriendMessage:<FRIEND_QQ>",
     "snowluma:GroupMessage:<GROUP_ID>",
 ):
     msgs = json.loads(rows[umo])

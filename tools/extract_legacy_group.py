@@ -8,8 +8,8 @@ DB = r"D:\qqbot\astrbot\data\data_v4.db"
 LEGACY = [
     "snowluma:GroupMessage:<OWNER_QQ>_<GROUP_ID>",
     "snowluma:GroupMessage:<FRIEND_QQ>_<GROUP_ID>",
-    "snowluma:GroupMessage:3825551887_<GROUP_ID>",
-    "snowluma:GroupMessage:2501413156_<GROUP_ID>",
+    "snowluma:GroupMessage:<MEMBER_QQ1>_<GROUP_ID>",
+    "snowluma:GroupMessage:<MEMBER_QQ2>_<GROUP_ID>",
 ]
 SHARED = "snowluma:GroupMessage:<GROUP_ID>"
 

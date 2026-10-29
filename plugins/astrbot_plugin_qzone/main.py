@@ -756,7 +756,7 @@ class QzonePlugin(Star):
     VISION_JPEG_QUALITY = 80
     # llama-server 二进制与权重：都在 llama.cpp 的 Vulkan 后端目录 / 本地 models 下
     VISION_SERVER_EXE = Path(
-        r"C:\Users\qhy\.lmstudio\extensions\backends"
+        r"C:\Users\<user>\.lmstudio\extensions\backends"
         r"\llama.cpp-win-x86_64-vulkan-avx2-2.51.0\llama-server.exe"
     )
     VISION_MODEL_PATH = Path(

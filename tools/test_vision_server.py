@@ -20,7 +20,7 @@ from astrbot_plugin_qzone.main import QzonePlugin
 
 ROOT = Path(r"D:\qqbot\models\qwen2vl-2b")
 EXE = Path(
-    r"C:\Users\qhy\.lmstudio\extensions\backends"
+    r"C:\Users\<user>\.lmstudio\extensions\backends"
     r"\llama.cpp-win-x86_64-vulkan-avx2-2.51.0\llama-server.exe"
 )
 MODEL = ROOT / "Qwen2-VL-2B-Instruct-Q4_K_M.gguf"

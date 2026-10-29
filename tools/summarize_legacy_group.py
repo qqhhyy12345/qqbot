@@ -14,8 +14,8 @@ OUT = Path(r"D:\qqbot\bot-memory\archive\_legacy_group_split")
 LEGACY = [
     ("snowluma:GroupMessage:<OWNER_QQ>_<GROUP_ID>", "你（主人）本人"),
     ("snowluma:GroupMessage:<FRIEND_QQ>_<GROUP_ID>", "群友 <FRIEND_QQ>"),
-    ("snowluma:GroupMessage:3825551887_<GROUP_ID>", "群友 3825551887"),
-    ("snowluma:GroupMessage:2501413156_<GROUP_ID>", "群友 2501413156"),
+    ("snowluma:GroupMessage:<MEMBER_QQ1>_<GROUP_ID>", "群友 <MEMBER_QQ1>"),
+    ("snowluma:GroupMessage:<MEMBER_QQ2>_<GROUP_ID>", "群友 <MEMBER_QQ2>"),
 ]
 
 PROMPT = (

@@ -9,11 +9,11 @@ import sys
 import warnings
 
 warnings.filterwarnings("ignore")
-sys.path.insert(0, r"C:\Users\qhy\Desktop\ultralytics-main")
+sys.path.insert(0, r"C:\Users\<user>\Desktop\ultralytics-main")
 
 from ultralytics import YOLO  # noqa: E402
 
-WEIGHT = r"C:\Users\qhy\Desktop\ultralytics-main\yolov8n.pt"
+WEIGHT = r"C:\Users\<user>\Desktop\ultralytics-main\yolov8n.pt"
 CACHE = r"D:\qqbot\astrbot\data\plugin_data\astrbot_plugin_qzone\cache\builtin_renderer"
 
 print("加载模型:", WEIGHT)
